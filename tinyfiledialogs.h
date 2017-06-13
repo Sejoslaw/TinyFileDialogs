@@ -1,14 +1,14 @@
 /*_________
- /         \ tinyfiledialogs.h v2.8 [February 15, 2017] zlib licence
+ /         \ tinyfiledialogs.h v2.8.4 [Jun 13, 2017] zlib licence
  |tiny file| Unique header file created [November 9, 2014]
  | dialogs | Copyright (c) 2014 - 2017 Guillaume Vareille http://ysengrin.com
  \____  ___/ http://tinyfiledialogs.sourceforge.net
       \|
                                 git://git.code.sf.net/p/tinyfiledialogs/code
-	 ______________________________________________________
-	|                                                      |
-	| direct CONTACT:  mailto:tinyfiledialogs@ysengrin.com |
-	|______________________________________________________|
+		 ______________________________________________
+		|                                              |
+		| DIRECT CONTACT: tinyfiledialogs@ysengrin.com |
+		|______________________________________________|
 
 A big thank you to Don Heyse http://ldglite.sf.net for
                    his code contributions, bug corrections & thorough testing!
@@ -26,6 +26,7 @@ tiny file dialogs (cross-platform C C++)
 InputBox PasswordBox MessageBox ColorPicker
 OpenFileDialog SaveFileDialog SelectFolderDialog
 Native dialog library for WINDOWS MAC OSX GTK+ QT CONSOLE & more
+SSH supported via automatic switch to console mode or X11 forwarding
 
 A single C file (add it to your C or C++ project) with 6 functions:
 - message & question
@@ -256,7 +257,7 @@ char const * tinyfd_arrayDialog(
 /*
 - This is not for android nor ios.
 - The code is pure C, perfectly compatible with C++.
-- the windows utf-16 prototypes are in the header file
+- the windows wchar_t (utf-16) prototypes are in the header file
 - windows is fully supported from XP to 10 (maybe even older versions)
 - C# & LUA via dll, see example files
 - OSX supported from 10.4 to 10.11 (maybe even older versions)
@@ -295,4 +296,3 @@ char const * tinyfd_arrayDialog(
 - MinGW needs gcc >= v4.9 otherwise some headers are incomplete.
 - The Hello World (and a bit more) is on the sourceforge site:
 */
-

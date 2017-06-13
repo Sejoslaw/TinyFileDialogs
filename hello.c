@@ -1,14 +1,14 @@
 /*_________
- /         \ hello.c v2.8 [February 15, 2017] zlib licence
+ /         \ hello.c v2.8.4 [Jun 13, 2017] zlib licence
  |tiny file| Hello World file created [November 9, 2014]
  | dialogs | Copyright (c) 2014 - 2017 Guillaume Vareille http://ysengrin.com
  \____  ___/ http://tinyfiledialogs.sourceforge.net
       \|
                                 git://git.code.sf.net/p/tinyfiledialogs/code
-	 ______________________________________________________
-	|                                                      |
-	| direct CONTACT:  mailto:tinyfiledialogs@ysengrin.com |
-	|______________________________________________________|
+		 ______________________________________________
+		|                                              |
+		| DIRECT CONTACT: tinyfiledialogs@ysengrin.com |
+		|______________________________________________|
 
 Please
 	1) let me know
@@ -21,6 +21,7 @@ tiny file dialogs (cross-platform C C++)
 InputBox PasswordBox MessageBox ColorPicker
 OpenFileDialog SaveFileDialog SelectFolderDialog
 Native dialog library for WINDOWS MAC OSX GTK+ QT CONSOLE & more
+SSH supported via automatic switch to console mode or X11 forwarding
 
 A single C file (add it to your C or C++ project) with 6 boxes:
 - message / question
@@ -127,10 +128,9 @@ int main(void)
 
 	if ( lWillBeGraphicMode && ! tinyfd_forceConsole )
 	{
-		tinyfd_forceConsole = tinyfd_messageBox("Hello World",
-			"force dialogs into console mode?\
-				\n\t(it is better if dialog is installed)",
-				"yesno", "question", 0);
+		tinyfd_forceConsole = ! tinyfd_messageBox("Hello World",
+			"graphic dialogs [yes] / console mode [no]?",
+			"yesno", "question", 1);
 	}
 
 	lTmp = tinyfd_inputBox(
@@ -217,7 +217,7 @@ int main(void)
 	tinyfd_messageBox("your password is",
 			lBuffer, "ok", "info", 1);
 
-	lTheSelectFolderName = tinyfd_selectFolderDialogW(
+	lTheSelectFolderName = tinyfd_selectFolderDialog(
 		"let us just select a directory", NULL);
 
 	if (!lTheSelectFolderName)

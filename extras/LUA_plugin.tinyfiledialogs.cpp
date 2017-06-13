@@ -1,5 +1,5 @@
 /*_________
- /         \ LUA_plugin.tinyfiledialogs.cpp v2.7.3 [January 23, 2017] zlib licence
+ /         \ LUA_plugin.tinyfiledialogs.cpp v2.8.4 [Jun 13, 2017] zlib licence
  |tiny file| LUA bindings created [2016]
  | dialogs | Copyright (c) 2014 - 2017 Guillaume Vareille http://ysengrin.com
  \____  ___/ http://tinyfiledialogs.sourceforge.net
