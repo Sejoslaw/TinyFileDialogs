@@ -1,5 +1,5 @@
 /*_________
- /         \ hello_wchar_t.c v3.5.0 [Apr 13, 2020] zlib licence
+ /         \ hello_wchar_t.c v3.8.2 [Oct 29, 2020] zlib licence
  |tiny file| Hello WCHAR_T windows only file created [November 9, 2014]
  | dialogs | Copyright (c) 2014 - 2020 Guillaume Vareille http://ysengrin.com
  \____  ___/ http://tinyfiledialogs.sourceforge.net
@@ -8,72 +8,21 @@
              |                                            |
              |   email: tinyfiledialogs at ysengrin.com   |
              |____________________________________________|
-  _______________________________
- |                               |
- | this file is for windows only |
- |_______________________________|
+              _______________________________
+             |                               |
+             | this file is for windows only |
+             |_______________________________|
 	  
 If you like tinyfiledialogs, please upvote my stackoverflow answer
 https://stackoverflow.com/a/47651444
 
-tiny file dialogs (cross-platform C C++)
-InputBox PasswordBox MessageBox ColorPicker
-OpenFileDialog SaveFileDialog SelectFolderDialog
-Native dialog library for WINDOWS MAC OSX GTK+ QT CONSOLE & more
-SSH supported via automatic switch to console mode or X11 forwarding
-
-one C file + a header (add them to your C or C++ project) with 8 functions:
-- beep
-- notify popup (tray)
-- message & question
-- input & password
-- save file
-- open file(s)
-- select folder
-- color picker
-
-Complements OpenGL Vulkan GLFW GLUT GLUI VTK SFML TGUI
-SDL Ogre Unity3d ION OpenCV CEGUI MathGL GLM CPW GLOW
-Open3D IMGUI MyGUI GLT NGL STB & GUI less programs
-
-NO INIT
-NO MAIN LOOP
-NO LINKING
-NO INCLUDE
-
-The dialogs can be forced into console mode
-
-Windows (XP to 10) ASCII MBCS UTF-8 UTF-16
-- native code & vbs create the graphic dialogs
-- enhanced console mode can use dialog.exe from
-http://andrear.altervista.org/home/cdialog.php
-- basic console input
-
-Unix (command line calls) ASCII UTF-8
-- applescript, kdialog, zenity
-- python (2 or 3) + tkinter + python-dbus (optional)
-- dialog (opens a console if needed)
-- basic console input
-The same executable can run across desktops & distributions
-
-C89 & C++98 compliant: tested with C & C++ compilers
-VisualStudio MinGW-gcc GCC Clang TinyCC OpenWatcom-v2 BorlandC SunCC ZapCC
-on Windows Mac Linux Bsd Solaris Minix Raspbian
-using Gnome Kde Enlightenment Mate Cinnamon Budgie Unity Lxde Lxqt Xfce
-WindowMaker IceWm Cde Jds OpenBox Awesome Jwm Xdm Cwm
-
-Bindings for LUA and C# dll, Haskell, Fortran
-Included in LWJGL(java), Rust, Allegrobasic
-
 - License -
-
 This software is provided 'as-is', without any express or implied
 warranty.  In no event will the authors be held liable for any damages
 arising from the use of this software.
-
+Permission is granted to anyone to use this software for any purpose,
 including commercial applications, and to alter it and redistribute it
 freely, subject to the following restrictions:
-
 1. The origin of this software must not be misrepresented; you must not
 claim that you wrote the original software.  If you use this software
 in a product, an acknowledgment in the product documentation would be
@@ -88,10 +37,14 @@ misrepresented as being the original software.
 #include <stdio.h>
 #include <string.h>
 #include "tinyfiledialogs.h"
+
+#ifdef _MSC_VER
+#pragma warning(disable:4996) /* silences warning about wcscpy*/
+#endif
+
 int main(void) /* WINDOWS ONLY */
 {
-	int lIntValue;
-	wchar_t const * lTmp;
+	wchar_t const * lPassword;
 	wchar_t const * lTheSaveFileName;
 	wchar_t const * lTheOpenFileName;
 	wchar_t const * lTheSelectFolderName;
@@ -101,14 +54,9 @@ int main(void) /* WINDOWS ONLY */
 	FILE * lIn;
 	wchar_t lWcharBuff[1024];
 	wchar_t lBuffer[1024];
-	wchar_t lString[1024];
 	wchar_t const * lFilterPatterns[2] = { L"*.txt", L"*.text" };
 
 	lWillBeGraphicMode = tinyfd_inputBoxW(L"tinyfd_query", NULL, NULL);
-
-#ifdef _MSC_VER
-#pragma warning(disable:4996) /* silences warning about strcpy strcat fopen wcscpy*/
-#endif
 
 	wcscpy(lBuffer, L"v");
 	mbstowcs(lWcharBuff, tinyfd_version, strlen(tinyfd_version) + 1);
@@ -126,29 +74,15 @@ int main(void) /* WINDOWS ONLY */
 	wcscat(lBuffer, L"\n");
 	mbstowcs(lWcharBuff, tinyfd_needs + 78, strlen(tinyfd_needs + 78) + 1);
 	wcscat(lBuffer, lWcharBuff);
-	wcscpy(lString, L"hello");
-	tinyfd_messageBoxW(lString, lBuffer, L"ok", L"info", 0);
+
+	tinyfd_messageBoxW(L"hello", lBuffer, L"ok", L"info", 0);
 
 	tinyfd_notifyPopupW(L"the title", L"the message\n\tfrom outer-space", L"info");
 
-	/*tinyfd_forceConsole = 1;*/
-	if ( lWillBeGraphicMode && ! tinyfd_forceConsole )
-	{
-		lIntValue = tinyfd_messageBoxW(L"Hello World",
-			L"Console mode is not implemented for wchar UTF-16",
-			L"ok", L"info", 1);
-		tinyfd_forceConsole = ! lIntValue ;	
-	}
+	lPassword = tinyfd_inputBoxW(
+		L"a password box", L"your password will be revealed later", NULL);
 
-	lTmp = tinyfd_inputBoxW(
-		L"a password box", L"your password will be revealed", NULL);
-
-	if (!lTmp) return 1 ;
-
-	/* copy lTmp because saveDialog would overwrites
-	inputBox static buffer in basicinput mode */
-
-	wcscpy(lString, lTmp);
+	if (!lPassword) return 1;
 
 	lTheSaveFileName = tinyfd_saveFileDialogW(
 		L"let us save this password",
@@ -179,7 +113,7 @@ int main(void) /* WINDOWS ONLY */
 			1);
 		return 1 ;
 	}
-	fputws(lString, lIn);
+	fputws(lPassword, lIn);
 	fclose(lIn);
 
 	lTheOpenFileName = tinyfd_openFileDialogW(
@@ -202,10 +136,6 @@ int main(void) /* WINDOWS ONLY */
 	}
 
 	lIn = _wfopen(lTheOpenFileName, L"rt, ccs=UNICODE");
-
-#ifdef _MSC_VER
-#pragma warning(default:4996)
-#endif
 
 	if (!lIn)
 	{
@@ -261,25 +191,34 @@ int main(void) /* WINDOWS ONLY */
 	tinyfd_messageBoxW(L"The selected hexcolor is",
 		lTheHexColor, L"ok", L"info", 1);
 
+	tinyfd_messageBoxW(L"your password was", lPassword, L"ok", L"info", 1);
+
 	tinyfd_beep();
 
 	return 0;
 }
 
+#ifdef _MSC_VER
+#pragma warning(default:4996)
+#endif
+
+
 /*
-MinGW needs gcc >= v4.9 otherwise some headers are incomplete:
+MinGW needs gcc >= v4.9 otherwise some headers are incomplete
 > gcc -o hello.exe hello.c tinyfiledialogs.c -LC:/mingw/lib -lcomdlg32 -lole32
 
 TinyCC needs >= v0.9.27 (+ tweaks - contact me) otherwise some headers are missing
-> tcc -o hello.exe hello.c tinyfiledialogs.c
-    -isystem C:\tcc\winapi-full-for-0.9.27\include\winapi
-    -lcomdlg32 -lole32 -luser32 -lshell32
+> tcc -o hello.exe hello.c tinyfiledialogs.c ^
+	-isystem C:\tcc\winapi-full-for-0.9.27\include\winapi ^
+	-lcomdlg32 -lole32 -luser32 -lshell32
 
 Borland C: > bcc32c -o hello.exe hello.c tinyfiledialogs.c
-
 OpenWatcom v2: create a character-mode executable project.
 
 VisualStudio :
-    Create a console application project,
-    it links against Comdlg32.lib & Ole32.lib.
+	Create a console application project,
+	it links against comdlg32.lib & ole32.lib.
+
+VisualStudio command line :
+	> cl hello.c tinyfiledialogs.c comdlg32.lib ole32.lib user32.lib shell32.lib /W4
 */
