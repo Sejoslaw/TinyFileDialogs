@@ -1,7 +1,7 @@
 /*_________
- /         \ hello.c v3.8.2 [Oct 29, 2020] zlib licence
+ /         \ hello.c v3.9.0 [Nov 3, 2022] zlib licence
  |tiny file| Hello World file created [November 9, 2014]
- | dialogs | Copyright (c) 2014 - 2020 Guillaume Vareille http://ysengrin.com
+ | dialogs | Copyright (c) 2014 - 2021 Guillaume Vareille http://ysengrin.com
  \____  ___/ http://tinyfiledialogs.sourceforge.net
       \|     git clone http://git.code.sf.net/p/tinyfiledialogs/code tinyfd
               ____________________________________________
@@ -52,6 +52,7 @@ misrepresented as being the original software.
 #include <stdio.h>
 #include <string.h>
 #include "tinyfiledialogs.h"
+
 
 #ifdef _MSC_VER
 #pragma warning(disable:4996) /* silences warnings about strcpy strcat fopen*/
@@ -108,13 +109,18 @@ int main( int argc , char * argv[] )
 
 	if ( lWillBeGraphicMode && ! tinyfd_forceConsole )
 	{
-		lIntValue = tinyfd_messageBox("Hello World","\
+#if 0
+			lIntValue = tinyfd_messageBox("Hello World", "\
 graphic dialogs [Yes]\n\
 console mode [No]\n\
 quit [Cancel]",
-			"yesnocancel", "question", 1);
-		if (!lIntValue) return 1;
-		tinyfd_forceConsole = (lIntValue == 2) ;
+				"yesnocancel", "question", 1);
+			if (!lIntValue) return 1;
+			tinyfd_forceConsole = (lIntValue == 2);
+#else
+			lIntValue = tinyfd_messageBox("Hello World", "graphic dialogs [Yes] / console mode [No]", "yesno", "question", 1);
+			tinyfd_forceConsole = ! lIntValue;
+#endif
 	}
 
 	lPassword = tinyfd_inputBox(
@@ -167,7 +173,7 @@ quit [Cancel]",
 		"",
 		2,
 		lFilterPatterns,
-		NULL,
+		"text files",
 		0);
 
 	if (! lTheOpenFileName)

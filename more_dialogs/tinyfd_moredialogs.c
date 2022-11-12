@@ -1,11 +1,14 @@
 /*_________
- /         \ tinyfiledialogs v3.8.0 [Oct 5, 2020] zlib licence
+ /         \ tinyfiledialogs v3.9.0 [Nov 3, 2022] zlib licence
  |tiny file| 
- | dialogs | Copyright (c) 2014 - 2020 Guillaume Vareille http://ysengrin.com
+ | dialogs | Copyright (c) 2014 - 2021 Guillaume Vareille http://ysengrin.com
  \____  ___/ http://tinyfiledialogs.sourceforge.net
       \|     git clone http://git.code.sf.net/p/tinyfiledialogs/code tinyfd
 
- - License -
+If you like tinyfiledialogs, please upvote my stackoverflow answer
+https://stackoverflow.com/a/47651444
+
+- License -
  This software is provided 'as-is', without any express or implied
  warranty.  In no event will the authors be held liable for any damages
  arising from the use of this software.
@@ -20,6 +23,12 @@
  misrepresented as being the original software.
  3. This notice may not be removed or altered from any source distribution.
 */
+
+#ifndef __sun
+#ifndef _POSIX_C_SOURCE
+#define _POSIX_C_SOURCE 2 /* to accept POSIX 2 in old ANSI C standards */
+#endif
+#endif
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -185,7 +194,7 @@ char *tinyfd_checklistDialog(
         if (tfd_isDarwin())
         {
                 target += sprintf(target, "osascript -e \'set Choices to {");
-                for (int i = 0; i < aNumOfOptions; i++)
+                for (i = 0; i < aNumOfOptions; i++)
                 {
                         if (i != aNumOfOptions - 1)
                                 target += sprintf(target, "\"%s\", ", aOptions[i]);
@@ -198,7 +207,7 @@ char *tinyfd_checklistDialog(
 		else if (tfd_kdialogPresent())
         {
                 target += sprintf(target, "kdialog --checklist \'%s\' ", aTitle);
-                for (int i = 0; i < aNumOfOptions; i++)
+                for (i = 0; i < aNumOfOptions; i++)
                 {
                         target += sprintf(target, "\'%s\' \'%s\' OFF ", aOptions[i], aOptions[i]);
                 }
@@ -206,7 +215,7 @@ char *tinyfd_checklistDialog(
 		else if (tfd_zenityPresent())
         {
                 target += sprintf(target, "zenity --list --column= --column= --checklist --title=\'%s\' ", aTitle);
-                for (int i = 0; i < aNumOfOptions; i++)
+                for (i = 0; i < aNumOfOptions; i++)
                 {
                         target += sprintf(target, "\'\' \'%s\' ", aOptions[i]);
                 }

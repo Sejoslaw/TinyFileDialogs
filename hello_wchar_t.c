@@ -1,7 +1,7 @@
 /*_________
- /         \ hello_wchar_t.c v3.8.2 [Oct 29, 2020] zlib licence
+ /         \ hello_wchar_t.c v3.9.0 [Nov 3, 2022] zlib licence
  |tiny file| Hello WCHAR_T windows only file created [November 9, 2014]
- | dialogs | Copyright (c) 2014 - 2020 Guillaume Vareille http://ysengrin.com
+ | dialogs | Copyright (c) 2014 - 2021 Guillaume Vareille http://ysengrin.com
  \____  ___/ http://tinyfiledialogs.sourceforge.net
       \|     git clone http://git.code.sf.net/p/tinyfiledialogs/code tinyfd
               ____________________________________________

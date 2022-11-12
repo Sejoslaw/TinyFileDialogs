@@ -1,9 +1,12 @@
 /*_________
- /         \ tinyfiledialogs v3.8.0 [Oct 5, 2020] zlib licence
+ /         \ tinyfiledialogs v3.9.0 [Nov 3, 2022] zlib licence
  |tiny file| 
- | dialogs | Copyright (c) 2014 - 2020 Guillaume Vareille http://ysengrin.com
+ | dialogs | Copyright (c) 2014 - 2021 Guillaume Vareille http://ysengrin.com
  \____  ___/ http://tinyfiledialogs.sourceforge.net
       \|     git clone http://git.code.sf.net/p/tinyfiledialogs/code tinyfd
+
+If you like tinyfiledialogs, please upvote my stackoverflow answer
+https://stackoverflow.com/a/47651444
 
  - License -
  This software is provided 'as-is', without any express or implied
